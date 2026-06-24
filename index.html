@@ -10,6 +10,7 @@ window.MathJax = {
     inlineMath: [['$', '$'], ['\\(', '\\)']],
     displayMath: [['$$', '$$'], ['\\[', '\\]']]
   },
+  chtml: { scale: 1.1 },
   svg: { fontCache: 'global' }
 };
 </script>
@@ -20,7 +21,7 @@ window.MathJax = {
 html{scroll-behavior:smooth}
 body{margin:0;background:#fff;color:#000;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  line-height:1.55;font-size:16px}
+  line-height:1.65;font-size:17px}
 header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:2px solid #000}
 .head-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;
   align-items:center;gap:16px;flex-wrap:wrap}
@@ -46,8 +47,8 @@ h3{font-size:16px;margin:18px 0 8px;color:#000;font-weight:800}
 .pill,.pill.lap,.pill.z,.pill.fou,.pill.conv,.pill.sys{display:inline-block;font-size:12px;
   font-weight:800;padding:3px 10px;border-radius:0;background:#000;color:#fff;border:1px solid #000;
   text-transform:uppercase;letter-spacing:.5px}
-table.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
-table.tbl th,table.tbl td{border:1px solid #000;padding:9px 12px;text-align:left}
+table.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:16px}
+table.tbl th,table.tbl td{border:1px solid #000;padding:11px 14px;text-align:left}
 table.tbl th{background:#000;color:#fff;font-weight:700}
 .muted{color:#000;font-style:italic}
 .small{font-size:13px}
@@ -66,7 +67,7 @@ details .body{padding:10px 18px 16px;border-top:1px solid #000}
 .q .qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
 .q .qnum{font-weight:800}
 .opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid #000;
-  color:#000;padding:11px 14px;border-radius:0;margin:8px 0;cursor:pointer;font-size:15px}
+  color:#000;padding:12px 16px;border-radius:0;margin:8px 0;cursor:pointer;font-size:16px}
 .opt:hover{background:#000;color:#fff}
 .opt.correct{background:#000;border-color:#000;color:#fff;font-weight:800}
 .opt.correct::before{content:"\2713  "}
@@ -94,7 +95,7 @@ details .body{padding:10px 18px 16px;border-top:1px solid #000}
 .checklist li{padding:8px 0;border-bottom:1px solid #000;display:flex;gap:10px;align-items:flex-start}
 .checklist li:last-child{border:none}
 .checklist .num{font-weight:800;min-width:22px}
-.note{background:#fff;border:2px solid #000;border-radius:0;padding:12px 16px;margin:14px 0;font-size:14px}
+.note{background:#fff;border:2px solid #000;border-radius:0;padding:12px 16px;margin:14px 0;font-size:15px}
 .note.warn{background:#000;color:#fff}
 .filterbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
 .filterbar button{background:#fff;border:1px solid #000;color:#000;
@@ -102,15 +103,16 @@ details .body{padding:10px 18px 16px;border-top:1px solid #000}
 .filterbar button:hover{background:#000;color:#fff}
 .filterbar button.active{color:#fff;background:#000}
 mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+mjx-container[display='true']{margin:10px 0}
 footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
   border-top:2px solid #000;font-style:italic}
 /* ---- MOBİL ---- */
 @media (max-width:640px){
-  body{font-size:15px}
+  body{font-size:16px}
   .head-inner{padding:10px 14px;gap:8px}
   .logo{font-size:14px;width:100%;text-align:center}
   nav{margin-left:0;width:100%;justify-content:center}
-  nav button{flex:1 1 28%;padding:8px 6px;font-size:12px;text-align:center}
+  nav button{flex:1 1 45%;padding:8px 6px;font-size:12px;text-align:center}
   main{padding:18px 12px 60px}
   h1{font-size:20px}
   h2{font-size:16px;margin:26px 0 12px}
@@ -118,7 +120,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
   .card{padding:14px}
   /* tablolar yatay kaydırılabilir */
   .card>table.tbl,.card .body table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table.tbl th,table.tbl td{padding:8px 9px;font-size:14px}
+  table.tbl th,table.tbl td{padding:8px 9px;font-size:15px}
   .scorebar{position:static;top:auto;gap:12px;padding:12px}
   .grid.cols3{grid-template-columns:1fr 1fr 1fr;gap:8px}
   .kpi{padding:12px 4px}
@@ -141,13 +143,13 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
   <div class="head-inner">
     <div class="logo">Sinyaller &amp; Sistemler <span>· Final</span></div>
     <nav id="nav">
-      <button data-view="home" class="active">Başlangıç</button>
-      <button data-view="anlatim">Konu Anlatımı</button>
-      <button data-view="formul">Formüller</button>
-      <button data-view="ornek">Çözümlü Örnekler</button>
-      <button data-view="banka">Soru Bankası</button>
-      <button data-view="quiz">Test</button>
-      <button data-view="sim">Final Simülasyonu</button>
+      <button data-view="home" class="active">① Başlangıç</button>
+      <button data-view="anlatim">② Konu Anlatımı</button>
+      <button data-view="formul">③ Formüller</button>
+      <button data-view="ornek">④ Örnekler</button>
+      <button data-view="banka">⑤ Soru Bankası</button>
+      <button data-view="quiz">⑥ Test</button>
+      <button data-view="sim">⑦ Simülasyon</button>
     </nav>
   </div>
 </header>
@@ -226,6 +228,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
 <section id="anlatim" class="view">
   <h1>Konu Anlatımı — Sıfırdan</h1>
   <p class="sub">Bu dersi hiç görmediysen buradan başla. Günlük hayattan örneklerle, formülsüz mantığıyla.</p>
+  <div class="note warn"><b>Nasıl çalışmalısın?</b> Bu sayfayı bitir → <b>Formüller</b> sekmesini tara → <b>Çözümlü Örnekler</b>'i adım adım takip et → <b>Soru Bankası</b> + <b>Test</b> ile kendini sına → <b>Final Simülasyonu</b> ile prova yap.</div>
 
   <div class="note"><b>Büyük resim:</b> Bu ders iki şeyle ilgilenir — <b>sinyal</b> (zamanla değişen bir bilgi: ses, gerilim, sıcaklık) ve <b>sistem</b> (sinyali alıp başka sinyale çeviren kutu: amplifikatör, filtre). Final'deki 4 konu, bir sistemi/sinyali <b>farklı "gözlüklerle"</b> incelemenin yollarıdır.</div>
 
@@ -275,7 +278,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
     <p class="small"><b>Sezgi:</b> Bir orkestra sesini düşün. Fourier, o karmaşık sesi "şu kadar bas, şu kadar tiz" diye <b>frekanslara ayıran prizma</b>dır. Her sinyal, farklı frekanslardaki sinüs dalgalarının toplamı olarak yazılabilir.</p>
     <ul class="small">
       <li><b>Fourier Serisi:</b> sinyal <i>periyodikse</i> (tekrar ediyorsa), onu sinüslerin toplamı yapar. Katsayı \(a_k\) = "k. frekanstan ne kadar var".</li>
-      <li><b>Fourier Dönüşümü \(X(j\omega)\):</b> periyodik olmayan sinyaller için de aynı fikir. \(\omega\) = frekans. Sonuç, frekansların "reçetesi"dir.</li>
+      <li><b>Fourier Dönüşümü \(X(j\omega)\):</b> hem periyodik hem periyodik olmayan sinyaller için geçerli. Periyodik olmayanda sürekli bir spektrum, periyodikte ise ayrık çizgiler (\(X(j\omega)=2\pi\sum_k a_k\,\delta(\omega-k\omega_0)\)) çıkar. \(\omega\) = frekans. Sonuç, frekansların "reçetesi"dir.</li>
       <li><b>Neden lazım?</b> Bir sistemden sinyal geçince her frekans bağımsız davranır. Frekans bölgesinde çarpma, zaman bölgesinde zor olan konvolüsyonun yerini alır.</li>
     </ul>
     <div class="note small"><b>Finalde tipik:</b> verilen \(x(t)\) veya \(x[n]\)'in dönüşümünü tablodan bul; ya da fark denkleminden frekans yanıtı \(H\) çıkar.</div>
@@ -283,16 +286,18 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
 
   <h2>3 · DTFT &amp; Frekans Yanıtı — ayrık sistemler</h2>
   <div class="card">
+    <div class="note small">Ön bilgi: Ayrık sistemler <b>fark denklemleriyle</b> tanımlanır (sürekli sistemlerdeki diferansiyel denklemin ayrık karşılığı). Gösterim: \(z^{-1}\) veya \(n-1\) = "bir adım geciktir".</div>
     <p class="small"><b>DTFT</b> = ayrık sinyaller için Fourier. Ayrık bir sistem çoğunlukla bir <b>fark denklemi</b> ile verilir, örn. \(y[n]-\tfrac12 y[n-1]=x[n]\). Bu, "şu anki çıkış, biraz da bir önceki çıkışa bağlı" demektir.</p>
     <div class="step small"><b>Reçete (çok önemli):</b> Her \(y[n-k]\) terimini \(e^{-jk\omega}Y\), her \(x[n-k]\)'yi \(e^{-jk\omega}X\) yap. Sonra \(H(e^{j\omega})=\dfrac{Y}{X}\) çek. \(H\) sistemin "frekans karnesi"dir: hangi frekansı ne kadar geçirir.</div>
-    <p class="small"><b>Dürtü yanıtı \(h[n]\)</b>: \(H\)'yi kısmi kesirlere ayır, her parçayı tablodan ters çevir. Çok kullanılan çift: \(a^n u[n]\leftrightarrow\dfrac{1}{1-ae^{-j\omega}}\).</p>
+    <p class="small"><b>Dürtü yanıtı \(h[n]\)</b>: \(H\)'yi kısmi kesirlere ayır, her parçayı tablodan ters çevir. Çok kullanılan çift: \(a^n u[n]\leftrightarrow\dfrac{1}{1-ae^{-j\omega}}\) (\(|a|<1\) olmalı, aksi hâlde DTFT yakınsamaz).</p>
   </div>
 
   <h2>4 · Laplace — sürekli sistemlerin "süper" dönüşümü</h2>
   <div class="card">
-    <p class="small"><b>Sezgi:</b> Fourier sadece "saf salınan" sinyalleri analiz eder. Laplace, üstüne <b>büyüyen/sönen</b> (\(e^{at}\)) davranışı da ekler — daha genel. Değişken \(s\) karmaşık bir sayıdır. Türev/integral içeren diferansiyel denklemleri basit cebire çevirir.</p>
+    <p class="small"><b>Sezgi:</b> Fourier, \(s\) düzleminin yalnızca sanal ekseninde (\(s=j\omega\)) bakar; sönen veya sonlu süreli (mutlak integrallenebilir) sinyallerle çalışır. Laplace ise tüm karmaşık düzleme (\(s=\sigma+j\omega\)) açılır: <b>büyüyen</b> sinyalleri, kararsız sistemleri de kapsar — daha genel. Türev/integral içeren diferansiyel denklemleri basit cebire çevirir.</p>
     <ul class="small">
       <li><b>Nasıl çalışır:</b> Diferansiyel denklemi \(s\) bölgesine taşı (türev → \(s\) ile çarpma). Cebirle çöz, sonra tablodan geri dön.</li>
+      <li><b>Kutup nedir?</b> \(X(s)\) bir kesirdir; paydayı sıfır yapan \(s\) değerleri <b>kutup</b>tur. Örn. \(X(s)=\frac{1}{s+2}\) için kutup \(s=-2\).</li>
       <li><b>ROC (Yakınsaklık Bölgesi):</b> En kritik nokta. Aynı \(X(s)\) ifadesi, ROC'a göre <b>farklı sinyaller</b> verir. Kural: kutbun <b>sağındaki</b> ROC → sağ-taraflı (\(u(t)\), nedensel); <b>solundaki</b> → sol-taraflı (\(u(-t)\)).</li>
     </ul>
     <div class="note small"><b>Finalde tipik:</b> \(X(s)\) + ROC verilir → kısmi kesir → tablodan \(x(t)\). Ya da giriş-çıkıştan \(H(s)\) bul.</div>
@@ -315,7 +320,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
       <li><span class="num">Z</span><div><b>Zamanla değişmez mi?</b> Katsayılar \(t\) veya \(n\)'e bağlıysa, ya da zaman ölçekleniyorsa (\(x(t/2)\)) → değil.</div></li>
       <li><span class="num">N</span><div><b>Nedensel mi?</b> Çıkış sadece <i>şu an ve geçmişe</i> bağlıysa evet. Gelecek (\(x(t+1)\)) kullanıyorsa → değil. (\(h(t)=0,\ t<0\) ⇔ nedensel.)</div></li>
       <li><span class="num">K</span><div><b>Kararlı mı (BIBO)?</b> \(\int|h|\,dt<\infty\) veya \(\sum|h[n]|<\infty\) ise evet. Sınırlı girdi → sınırlı çıktı.</div></li>
-      <li><span class="num">H</span><div><b>Hafızalı mı?</b> Çıkış başka anların değerlerine bağlıysa hafızalı; sadece o anki \(x[n]\)'e bağlıysa hafızasız.</div></li>
+      <li><span class="num">H</span><div><b>Hafızalı mı?</b> Çıkış yalnızca o anki giriş \(x[n]\)'e bağlıysa hafızasız (\(y[n]=f(x[n])\)); geçmiş/gelecek giriş (\(x[n-1],x[n+1]\)) ya da geçmiş çıkış (\(y[n-1]\)) gerekiyorsa hafızalıdır.</div></li>
     </ul>
   </div>
 
@@ -352,7 +357,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
     <tr><td>Toplam</td><td>$\mathcal{L}\{f_1+f_2\}=F_1(s)+F_2(s)$</td></tr>
     <tr><td>Modülasyon ($s$-kayma)</td><td>$\mathcal{L}\{e^{-at}f(t)\}=F(s+a)$</td></tr>
     <tr><td>Zaman kayması</td><td>$\mathcal{L}\{f(t-\tau)u(t-\tau)\}=e^{-s\tau}F(s)$</td></tr>
-    <tr><td>Ölçekleme</td><td>$\mathcal{L}\{f(at)\}=\frac{1}{a}F\!\left(\frac{s}{a}\right)$</td></tr>
+    <tr><td>Ölçekleme</td><td>$\mathcal{L}\{f(at)\}=\frac{1}{a}F\!\left(\frac{s}{a}\right),\ a>0$</td></tr>
     <tr><td>Türev</td><td>$\mathcal{L}\{f'(t)\}=sF(s)-f(0)$</td></tr>
     <tr><td>İntegral</td><td>$\mathcal{L}\{\int_0^t f\}=\frac{1}{s}F(s)$</td></tr>
     <tr><td>Karmaşık türev</td><td>$\mathcal{L}\{tf(t)\}=-\dfrac{d}{ds}F(s)$</td></tr>
@@ -465,7 +470,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
   <h1>Soru Bankası</h1>
   <p class="sub">Tüm PDF kaynaklarından derlenen <b id="bankCount">65</b> soru, çözümleriyle. Konuya göre filtrele veya ara, soruyu çöz, "Cevabı Göster".</p>
   <div class="scorebar" style="position:static">
-    <input id="bankSearch" placeholder="Soru içinde ara... (örn: Laplace, konvolüsyon, e^{-at})"
+    <input id="bankSearch" placeholder="Soru içinde ara... (örn: Laplace, konvolüsyon, impuls, ROC)"
       style="flex:1;min-width:200px;background:#fff;border:1px solid #000;color:#000;padding:10px 12px;border-radius:0;font-size:14px">
     <span class="muted small" id="bankShown"></span>
   </div>
@@ -489,7 +494,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
   <p class="sub">Çoktan seçmeli. Bir şıkka tıkla, anında geri bildirim al.</p>
   <div class="scorebar">
     <div>Skor: <b id="scoreNow">0</b> / <span id="scoreTotal">0</span></div>
-    <div class="muted">Doğru: <b id="scoreRight" style="color:var(--green)">0</b> · Yanlış: <b id="scoreWrong" style="color:var(--red)">0</b></div>
+    <div class="muted">Doğru: <b id="scoreRight" style="font-weight:800;text-decoration:underline">0</b> · Yanlış: <b id="scoreWrong" style="font-weight:400;font-style:italic">0</b></div>
     <button class="btn ghost" id="resetQuiz" style="margin-left:auto">Sıfırla</button>
   </div>
   <div class="filterbar" id="quizFilter">
@@ -510,9 +515,11 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
 </section>
 
 </main>
+<div id="mathjaxWarn" style="display:none;background:#000;color:#fff;padding:10px 20px;text-align:center;font-size:15px">Formüller yüklenemedi — internet bağlantını kontrol et ve sayfayı yenile.</div>
 <footer>
   Kaynak: ders PDF'leri + 2025 final cevap anahtarı (Assist. Prof. Dr. Sevcan Kahraman). · Yerel çalışma aracı, internet bağlantısı yalnızca formül render (MathJax) için gerekir.
 </footer>
+<script>window.addEventListener('load',function(){setTimeout(function(){if(!window.MathJax||!MathJax.typesetPromise){var w=document.getElementById('mathjaxWarn');if(w)w.style.display='block';}},4000);});</script>
 <script src="questions.js"></script>
 <script src="app.js"></script>
 </body>

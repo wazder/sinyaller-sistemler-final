@@ -39,17 +39,18 @@ const ORNEKLER = [
 {
   id:'o3', tag:'lap', pill:'lap', pillTxt:'Ters Laplace',
   title:'Ters Laplace: çift kutuplu, ROC bağımlı',
-  problem:`$X(s)=\\dfrac{1}{s(s+1)^2}$ için $x(t)$ bulun. ROC: $\\mathrm{Re}(s)>-1$ (ve diğer ROC'larda nasıl değişir?).`,
+  problem:`$X(s)=\\dfrac{1}{s(s+1)^2}$ için $x(t)$ bulun. ROC: $-1<\\mathrm{Re}(s)<0$ (2025 finalindeki haliyle; diğer ROC durumları da gösterilmiştir).`,
   solution:`
   <div class="step"><b>Kısmi kesir.</b> $\\dfrac{1}{s(s+1)^2}=\\dfrac{A}{s}+\\dfrac{B}{s+1}+\\dfrac{C}{(s+1)^2}$.<br>
   $A=1,\\ C=-1,\\ B=-1$:
-  $$X(s)=\\frac{1}{s}-\\frac{1}{s+1}-\\frac{1}{(s+1)^2}$$</div>
-  <div class="step"><b>ROC $\\mathrm{Re}(s)>-1$ (sağ taraflı, nedensel):</b>
-  $$x(t)=(1-e^{-t}-t e^{-t})u(t)$$</div>
-  <div class="step"><b>Diğer ROC'lar:</b>
+  $$X(s)=\\frac{1}{s}-\\frac{1}{s+1}-\\frac{1}{(s+1)^2}$$
+  Kutuplar: $s=0$ ve $s=-1$.</div>
+  <div class="step"><b>Asıl cevap — ROC $-1<\\mathrm{Re}(s)<0$:</b> Bu bölge $s=0$ kutbunun solunda, $s=-1$ kutbunun sağındadır. $s=0$ kutbu solda kaldığı için $\\frac1s$ terimi <b>sol taraflı</b> ($-u(-t)$); diğer iki terim ($s=-1$) <b>sağ taraflı</b>:
+  $$x(t)=-u(-t)-(1+t)e^{-t}u(t)$$</div>
+  <div class="step"><b>Diğer ROC durumları:</b>
   <ul class="small">
-   <li>$-1<\\mathrm{Re}(s)<0$: $\\ x(t)=-u(-t)-(1+t)e^{-t}u(t)$</li>
-   <li>$\\mathrm{Re}(s)<-1$ (sol taraflı): $\\ x(t)=(-1+e^{-t}+te^{-t})u(-t)$</li>
+   <li>$\\mathrm{Re}(s)>0$ (her iki kutbun sağı, tümü sağ taraflı/nedensel): $\\ x(t)=(1-e^{-t}-t e^{-t})u(t)$</li>
+   <li>$\\mathrm{Re}(s)<-1$ (her iki kutbun solu, tümü sol taraflı): $\\ x(t)=(-1+e^{-t}+te^{-t})u(-t)$</li>
   </ul>
   Kutbun sağındaki terim → $u(t)$, solundaki → $-u(-t)$.</div>
   <div class="note small">$\\dfrac{1}{(s+1)^2}\\leftrightarrow te^{-t}u(t)$ (sağ taraflı). Tablo: $t e^{at}\\leftrightarrow \\frac{1}{(s-a)^2}$.</div>`
@@ -254,10 +255,11 @@ const SIM = [
  ans:`Kısmi kesir $\\frac1s-\\frac{1}{s+1}-\\frac{1}{(s+1)^2}$. Bu ROC'ta ($s=0$ kutbunun solu, $s=-1$ sağı):
  $x(t)=-u(-t)-(1+t)e^{-t}u(t)$. <br>(Detay: o3 — farklı ROC karşılaştırması)`},
 {n:4, pill:'z', title:'Problem 4 — Z-dönüşümü + kutup-sıfır (25p)',
- q:`(a) $x[n]=(\\tfrac12)^n u[n]+(\\tfrac13)^n u[n]$ &nbsp; (b) $x[n]=(\\tfrac13)^n u[n]+(\\tfrac12)^n u[-n-1]$<br>
+ q:`(a) $x[n]=(\\tfrac12)^n u[n]+(\\tfrac13)^n u[n]$ &nbsp; (b) $x[n]=(\\tfrac13)^n u[n]+(\\tfrac12)^n u[-n-1]$ &nbsp; (c) $x[n]=(\\tfrac12)^n u[n]+(\\tfrac13)^n u[-n-1]$<br>
  Her biri için $X(z)$, ROC ve kutup-sıfır bölgesini çizin.`,
- ans:`(a) $X=\\frac{z}{z-\\frac12}+\\frac{z}{z-\\frac13}$, ROC $|z|>\\frac12$, sıfırlar $0,\\frac{5}{12}$, kutuplar $\\frac12,\\frac13$.<br>
- (b) $X=\\frac{z}{z-\\frac13}-\\frac{z}{z-\\frac12}$, ROC halka $\\frac13<|z|<\\frac12$ (biri sağ, biri sol taraflı), kutuplar $\\frac12,\\frac13$. <br>(Detay: o4)`}
+ ans:`(a) $X=\\frac{z}{z-\\frac12}+\\frac{z}{z-\\frac13}$, ROC $|z|>\\frac12$, sıfırlar $0$ ve $\\frac{5}{12}$, kutuplar $\\frac12,\\frac13$.<br>
+ (b) $X=\\frac{z}{z-\\frac13}-\\frac{z}{z-\\frac12}$, ROC halka $\\frac13<|z|<\\frac12$ (biri sağ, biri sol taraflı), 1 sıfır $z=0$, kutuplar $\\frac12,\\frac13$.<br>
+ (c) <b>Dikkat (tuzak):</b> $(\\tfrac12)^n u[n]\\to|z|>\\tfrac12$, $(\\tfrac13)^n u[-n-1]\\to|z|<\\tfrac13$. İki ROC <b>kesişmez</b> ($\\tfrac12>\\tfrac13$) $\\Rightarrow$ ortak yakınsaklık bölgesi yoktur, bu sinyalin Z-dönüşümü <b>mevcut değildir</b>. <br>(Detay: o4)`}
 ];
 
 /* ============================================================
@@ -301,7 +303,7 @@ let answered={};
 function renderQuiz(filter='all'){
   const box=document.getElementById('quizList'); box.innerHTML='';
   const list=QUIZ.map((q,i)=>({q,i})).filter(o=>filter==='all'||o.q.cat===filter);
-  document.getElementById('scoreTotal').textContent=QUIZ.length;
+  document.getElementById('scoreTotal').textContent=list.length;
   list.forEach(({q,i})=>{
     const d=document.createElement('div'); d.className='q'; d.dataset.idx=i;
     let opts=q.opts.map((o,j)=>`<button class="opt" data-i="${i}" data-j="${j}">${o}</button>`).join('');
