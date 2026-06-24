@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinyaller ve Sistemler — Final Çalışma</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+/* SAF SİYAH-BEYAZ — sadece #000 ve #fff, ara ton yok */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:#000;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.55;font-size:16px}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:2px solid #000}
+.head-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;
+  align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:18px;letter-spacing:.2px;text-transform:uppercase}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav button{background:#fff;border:1px solid #000;color:#000;
+  padding:8px 14px;border-radius:0;cursor:pointer;font-size:14px;font-weight:700}
+nav button:hover{background:#000;color:#fff}
+nav button.active{color:#fff;background:#000}
+main{max-width:1100px;margin:0 auto;padding:28px 20px 80px}
+.view{display:none}
+.view.active{display:block}
+h1{font-size:26px;margin:0 0 6px;text-transform:uppercase;letter-spacing:.5px}
+h2{font-size:20px;margin:34px 0 14px;padding-bottom:8px;border-bottom:2px solid #000;text-transform:uppercase}
+h3{font-size:16px;margin:18px 0 8px;color:#000;font-weight:800}
+.sub{margin:0 0 22px;font-style:italic}
+.grid{display:grid;gap:16px}
+.grid.cols2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.grid.cols3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:#fff;border:1px solid #000;border-radius:0;padding:18px 20px}
+.card.accent{border-left:6px solid #000}
+.card h3{margin-top:0}
+.pill,.pill.lap,.pill.z,.pill.fou,.pill.conv,.pill.sys{display:inline-block;font-size:12px;
+  font-weight:800;padding:3px 10px;border-radius:0;background:#000;color:#fff;border:1px solid #000;
+  text-transform:uppercase;letter-spacing:.5px}
+table.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
+table.tbl th,table.tbl td{border:1px solid #000;padding:9px 12px;text-align:left}
+table.tbl th{background:#000;color:#fff;font-weight:700}
+.muted{color:#000;font-style:italic}
+.small{font-size:13px}
+details{background:#fff;border:1px solid #000;border-radius:0;margin:12px 0;overflow:hidden}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:800;list-style:none;
+  display:flex;align-items:center;gap:10px;user-select:none;text-transform:uppercase;font-size:14px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"+";font-size:18px;font-weight:800;width:14px}
+details[open]>summary{background:#000;color:#fff}
+details[open]>summary::before{content:"\2212"}
+details .body{padding:10px 18px 16px;border-top:1px solid #000}
+.step{margin:14px 0;padding-left:14px;border-left:3px solid #000}
+.step b{font-weight:800;text-decoration:underline}
+/* quiz */
+.q{background:#fff;border:1px solid #000;border-radius:0;padding:18px 20px;margin:16px 0}
+.q .qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+.q .qnum{font-weight:800}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid #000;
+  color:#000;padding:11px 14px;border-radius:0;margin:8px 0;cursor:pointer;font-size:15px}
+.opt:hover{background:#000;color:#fff}
+.opt.correct{background:#000;border-color:#000;color:#fff;font-weight:800}
+.opt.correct::before{content:"\2713  "}
+.opt.wrong{background:#fff;border:3px solid #000;color:#000;text-decoration:line-through;font-weight:700}
+.opt.wrong::before{content:"\2717  ";text-decoration:none;display:inline-block}
+.opt.disabled{cursor:default}
+.opt.disabled:hover{background:#fff;color:#000}
+.opt.disabled.correct:hover{background:#000;color:#fff}
+.feedback{margin-top:10px;font-weight:700;font-size:14px;display:none;
+  border-left:4px solid #000;padding-left:12px}
+.feedback.show{display:block}
+.scorebar{position:sticky;top:62px;z-index:40;background:#fff;border:2px solid #000;
+  border-radius:0;padding:12px 18px;margin-bottom:18px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.scorebar b{font-size:18px}
+.btn{background:#000;border:1px solid #000;color:#fff;
+  padding:9px 16px;border-radius:0;cursor:pointer;font-weight:800;font-size:14px;text-transform:uppercase}
+.btn:hover{background:#fff;color:#000}
+.btn.ghost{background:#fff;color:#000}
+.btn.ghost:hover{background:#000;color:#fff}
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}
+.kpi{background:#fff;border:1px solid #000;border-radius:0;padding:18px;text-align:center}
+.kpi .n{font-size:34px;font-weight:800;color:#000}
+.kpi .l{font-size:13px;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{padding:8px 0;border-bottom:1px solid #000;display:flex;gap:10px;align-items:flex-start}
+.checklist li:last-child{border:none}
+.checklist .num{font-weight:800;min-width:22px}
+.note{background:#fff;border:2px solid #000;border-radius:0;padding:12px 16px;margin:14px 0;font-size:14px}
+.note.warn{background:#000;color:#fff}
+.filterbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.filterbar button{background:#fff;border:1px solid #000;color:#000;
+  padding:7px 14px;border-radius:0;cursor:pointer;font-size:13px;font-weight:700;text-transform:uppercase}
+.filterbar button:hover{background:#000;color:#fff}
+.filterbar button.active{color:#fff;background:#000}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
+  border-top:2px solid #000;font-style:italic}
+/* ---- MOBİL ---- */
+@media (max-width:640px){
+  body{font-size:15px}
+  .head-inner{padding:10px 14px;gap:8px}
+  .logo{font-size:14px;width:100%;text-align:center}
+  nav{margin-left:0;width:100%;justify-content:center}
+  nav button{flex:1 1 28%;padding:8px 6px;font-size:12px;text-align:center}
+  main{padding:18px 12px 60px}
+  h1{font-size:20px}
+  h2{font-size:16px;margin:26px 0 12px}
+  h3{font-size:15px}
+  .card{padding:14px}
+  /* tablolar yatay kaydırılabilir */
+  .card>table.tbl,.card .body table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.tbl th,table.tbl td{padding:8px 9px;font-size:14px}
+  .scorebar{position:static;top:auto;gap:12px;padding:12px}
+  .grid.cols3{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .kpi{padding:12px 4px}
+  .kpi .n{font-size:24px}
+  .kpi .l{font-size:10px}
+  .q,.note{padding:13px}
+  .opt{padding:10px 12px;font-size:14px}
+  details>summary{padding:11px 13px;font-size:13px}
+  details .body{padding:10px 13px 14px}
+  .qhead{flex-direction:column;gap:6px}
+}
+@media (max-width:360px){
+  nav button{flex:1 1 45%}
+  .grid.cols3{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <div class="logo">Sinyaller &amp; Sistemler <span>· Final</span></div>
+    <nav id="nav">
+      <button data-view="home" class="active">Başlangıç</button>
+      <button data-view="formul">Formüller</button>
+      <button data-view="ornek">Çözümlü Örnekler</button>
+      <button data-view="quiz">Test</button>
+      <button data-view="sim">Final Simülasyonu</button>
+    </nav>
+  </div>
+</header>
+<main>
+
+<!-- ============ HOME ============ -->
+<section id="home" class="view active">
+  <h1>Final için çalışma paneli</h1>
+  <p class="sub">Vize sonrası 4 konu var, finalde her birinden 1 soru çıkıyor. Bu panel sadece bu 4 konuya odaklı.</p>
+
+  <div class="note"><b>Sınav formatı:</b> 4 açık uçlu problem (her biri ~25 puan), her konudan 1 tane. 2025 final + resmi cevap anahtarı bu yapıyı doğruluyor.</div>
+
+  <div class="grid cols3" style="margin-bottom:8px">
+    <div class="kpi"><div class="n">4</div><div class="l">Konu = 4 soru</div></div>
+    <div class="kpi"><div class="n">10</div><div class="l">Çözümlü örnek</div></div>
+    <div class="kpi"><div class="n" id="quizCount">25</div><div class="l">Test sorusu</div></div>
+  </div>
+
+  <h2>Vize sonrası 4 konu</h2>
+  <div class="grid cols2">
+    <div class="card accent">
+      <span class="pill fou">Konu 1 — Fourier</span>
+      <h3>Fourier Dönüşümü &amp; Serisi</h3>
+      <p class="small muted">Sürekli/ayrık Fourier dönüşümü ve seri katsayıları.</p>
+      <ul class="small">
+        <li>CTFT: $e^{-at}u(t)\to\frac{1}{a+j\omega}$, dikdörtgen $\to$ sinc</li>
+        <li>DTFT: $\delta[n\pm n_0]$, $a^n u[n]$</li>
+        <li>Fourier serisi katsayısı $a_k$</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <span class="pill sys">Konu 2 — DTFT / Sistem</span>
+      <h3>Fark Denklemi → Frekans Yanıtı</h3>
+      <p class="small muted">Ayrık LTI sistemin fark denklemi verilir.</p>
+      <ul class="small">
+        <li>Frekans yanıtı $H(e^{j\omega})$</li>
+        <li>Dürtü yanıtı $h[n]$ (kısmi kesir + ters DTFT)</li>
+        <li>Belirli girdi için çıkış $y[n]$</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <span class="pill lap">Konu 3 — Laplace</span>
+      <h3>Laplace / Ters Laplace</h3>
+      <p class="small muted">$X(s)$ ve ROC verilir, $x(t)$ bulunur.</p>
+      <ul class="small">
+        <li>Kısmi kesirlere ayır</li>
+        <li>ROC'a göre sağ/sol taraflı kararı ver</li>
+        <li>Laplace tablosundan ters dönüşüm</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <span class="pill z">Konu 4 — Z</span>
+      <h3>Z-Dönüşümü + Kutup-Sıfır</h3>
+      <p class="small muted">$x[n]$ verilir; $X(z)$, ROC ve diyagram istenir.</p>
+      <ul class="small">
+        <li>Tablodan her terimi dönüştür</li>
+        <li>ROC kesişimini bul</li>
+        <li>Kutup (×) ve sıfırları (○) çiz</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Sınav günü stratejisi</h2>
+  <div class="card">
+    <ul class="checklist">
+      <li><span class="num">1</span><div><b>Formül tablosu büyük olasılıkla verilecek</b> (2025'te verilmiş). Yine de Laplace ve Z tablolarını ezberle — hız kazandırır.</div></li>
+      <li><span class="num">2</span><div><b>ROC = kader.</b> Aynı $X(s)$/$X(z)$ farklı ROC'larla farklı sinyal verir. Sağ taraflı → dışarı, sol taraflı → içeri.</div></li>
+      <li><span class="num">3</span><div><b>Fark denklemi → H</b>: her $y[n-k]$ için $e^{-jk\omega}Y$, her $x[n-k]$ için $e^{-jk\omega}X$ yaz, $H=Y/X$ çek.</div></li>
+      <li><span class="num">4</span><div><b>Kısmi kesir</b> her problemde lazım. $\frac{1}{(1-\frac12 z^{-1})(1-\frac14 z^{-1})}$ tipini hızlı çöz.</div></li>
+      <li><span class="num">5</span><div><b>Konvolüsyonda</b> $\delta$ kaydırır/ölçekler: $x(t)*\delta(t-a)=x(t-a)$.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FORMULLER ============ -->
+<section id="formul" class="view">
+  <h1>Formül &amp; Tablo Kartları</h1>
+  <p class="sub">Sınavdaki tüm dönüşüm tabloları ve özellikler. Hızlı tekrar için.</p>
+
+  <h2><span class="pill lap">Laplace</span> Dönüşüm Çiftleri</h2>
+  <div class="card">
+  <table class="tbl">
+    <tr><th>$f(t)$</th><th>$\mathcal{L}\{f(t)\}=F(s)$</th><th>ROC</th></tr>
+    <tr><td>$1$</td><td>$\dfrac{1}{s}$</td><td>$s>0$</td></tr>
+    <tr><td>$t$</td><td>$\dfrac{1}{s^2}$</td><td>$s>0$</td></tr>
+    <tr><td>$t^n$</td><td>$\dfrac{n!}{s^{n+1}}$</td><td>$s>0,\ n\in\mathbb{N}$</td></tr>
+    <tr><td>$e^{at}$</td><td>$\dfrac{1}{s-a}$</td><td>$s>a$</td></tr>
+    <tr><td>$\sin(at)$</td><td>$\dfrac{a}{s^2+a^2}$</td><td>$s>0$</td></tr>
+    <tr><td>$\cos(at)$</td><td>$\dfrac{s}{s^2+a^2}$</td><td>$s>0$</td></tr>
+    <tr><td>$e^{at}\sin(bt)$</td><td>$\dfrac{b}{(s-a)^2+b^2}$</td><td>$s>a$</td></tr>
+    <tr><td>$e^{at}\cos(bt)$</td><td>$\dfrac{s-a}{(s-a)^2+b^2}$</td><td>$s>a$</td></tr>
+    <tr><td>$\delta(t)$</td><td>$1$</td><td>tüm $s$</td></tr>
+    <tr><td>$u(t)$</td><td>$\dfrac{1}{s}$</td><td>$s>0$</td></tr>
+  </table>
+  </div>
+
+  <h3>Laplace Özellikleri</h3>
+  <div class="card">
+  <table class="tbl">
+    <tr><th>Özellik</th><th>Dönüşüm</th></tr>
+    <tr><td>Doğrusallık</td><td>$\mathcal{L}\{af(t)\}=aF(s)$</td></tr>
+    <tr><td>Toplam</td><td>$\mathcal{L}\{f_1+f_2\}=F_1(s)+F_2(s)$</td></tr>
+    <tr><td>Modülasyon ($s$-kayma)</td><td>$\mathcal{L}\{e^{-at}f(t)\}=F(s+a)$</td></tr>
+    <tr><td>Zaman kayması</td><td>$\mathcal{L}\{f(t-\tau)u(t-\tau)\}=e^{-s\tau}F(s)$</td></tr>
+    <tr><td>Ölçekleme</td><td>$\mathcal{L}\{f(at)\}=\frac{1}{a}F\!\left(\frac{s}{a}\right)$</td></tr>
+    <tr><td>Türev</td><td>$\mathcal{L}\{f'(t)\}=sF(s)-f(0)$</td></tr>
+    <tr><td>İntegral</td><td>$\mathcal{L}\{\int_0^t f\}=\frac{1}{s}F(s)$</td></tr>
+    <tr><td>Karmaşık türev</td><td>$\mathcal{L}\{tf(t)\}=-\dfrac{d}{ds}F(s)$</td></tr>
+    <tr><td>Konvolüsyon</td><td>$\mathcal{L}\{f*g\}=F(s)\cdot G(s)$</td></tr>
+  </table>
+  <p class="small muted">Yüksek mertebe türev: $\mathcal{L}\{f''(t)\}=s^2F(s)-sf(0)-f'(0)$. &nbsp; Genel: $t^nf(t)\leftrightarrow(-1)^nF^{(n)}(s)$.</p>
+  </div>
+
+  <h2><span class="pill z">Z</span> Dönüşüm Çiftleri (Tablo 4-1)</h2>
+  <div class="card">
+  <table class="tbl">
+    <tr><th>$x[n]$</th><th>$X(z)$</th><th>ROC</th></tr>
+    <tr><td>$\delta[n]$</td><td>$1$</td><td>tüm $z$</td></tr>
+    <tr><td>$u[n]$</td><td>$\dfrac{1}{1-z^{-1}}=\dfrac{z}{z-1}$</td><td>$|z|>1$</td></tr>
+    <tr><td>$-u[-n-1]$</td><td>$\dfrac{z}{z-1}$</td><td>$|z|<1$</td></tr>
+    <tr><td>$\delta[n-m]$</td><td>$z^{-m}$</td><td>$m>0$ için $z\ne0$</td></tr>
+    <tr><td>$a^n u[n]$</td><td>$\dfrac{1}{1-az^{-1}}=\dfrac{z}{z-a}$</td><td>$|z|>|a|$</td></tr>
+    <tr><td>$-a^n u[-n-1]$</td><td>$\dfrac{z}{z-a}$</td><td>$|z|<|a|$</td></tr>
+    <tr><td>$na^n u[n]$</td><td>$\dfrac{az^{-1}}{(1-az^{-1})^2}=\dfrac{az}{(z-a)^2}$</td><td>$|z|>|a|$</td></tr>
+    <tr><td>$-na^n u[-n-1]$</td><td>$\dfrac{az}{(z-a)^2}$</td><td>$|z|<|a|$</td></tr>
+    <tr><td>$(n+1)a^n u[n]$</td><td>$\dfrac{1}{(1-az^{-1})^2}=\left(\dfrac{z}{z-a}\right)^2$</td><td>$|z|>|a|$</td></tr>
+  </table>
+  </div>
+
+  <h3>Z-Dönüşümü Özellikleri (Tablo 4-2)</h3>
+  <div class="card">
+  <table class="tbl">
+    <tr><th>Özellik</th><th>Dizi</th><th>Dönüşüm</th></tr>
+    <tr><td>Doğrusallık</td><td>$a_1x_1[n]+a_2x_2[n]$</td><td>$a_1X_1(z)+a_2X_2(z)$</td></tr>
+    <tr><td>Zaman kayması</td><td>$x[n-n_0]$</td><td>$z^{-n_0}X(z)$</td></tr>
+    <tr><td>$z_0^n$ ile çarpma</td><td>$z_0^n x[n]$</td><td>$X(z/z_0)$</td></tr>
+    <tr><td>$e^{j\Omega_0 n}$ ile çarpma</td><td>$e^{j\Omega_0 n}x[n]$</td><td>$X(e^{-j\Omega_0}z)$</td></tr>
+    <tr><td>Zaman ters çevirme</td><td>$x[-n]$</td><td>$X(1/z)$</td></tr>
+    <tr><td>$n$ ile çarpma</td><td>$nx[n]$</td><td>$-z\dfrac{dX(z)}{dz}$</td></tr>
+    <tr><td>Toplam (accumulation)</td><td>$\sum_{k=-\infty}^{n}x[k]$</td><td>$\dfrac{1}{1-z^{-1}}X(z)$</td></tr>
+    <tr><td>Konvolüsyon</td><td>$x_1[n]*x_2[n]$</td><td>$X_1(z)X_2(z)$</td></tr>
+  </table>
+  <p class="small muted"><b>ROC kuralı:</b> sağ taraflı dizi → $|z|>$ en büyük kutup (dışarı). Sol taraflı → $|z|<$ en küçük kutup (içeri). İki taraflı → halka.</p>
+  </div>
+
+  <h2><span class="pill fou">Fourier</span> Dönüşümü (Sürekli &amp; Ayrık)</h2>
+  <div class="card">
+  <h3>Sürekli-zaman Fourier dönüşümü (CTFT)</h3>
+  <table class="tbl">
+    <tr><th>$x(t)$</th><th>$X(j\omega)$</th></tr>
+    <tr><td>$e^{-at}u(t),\ a>0$</td><td>$\dfrac{1}{a+j\omega}$</td></tr>
+    <tr><td>$e^{-a|t|},\ a>0$</td><td>$\dfrac{2a}{a^2+\omega^2}$</td></tr>
+    <tr><td>$e^{-at^2}$</td><td>$\sqrt{\dfrac{\pi}{a}}\,e^{-\omega^2/4a}$</td></tr>
+    <tr><td>$A,\ |t|\le T$ (dikdörtgen)</td><td>$2AT\,\mathrm{sinc}(\omega T)=\dfrac{2A}{\omega}\sin(\omega T)$</td></tr>
+    <tr><td>$\delta(t)$</td><td>$1$</td></tr>
+    <tr><td>$\delta(t-t_0)$</td><td>$e^{-j\omega t_0}$</td></tr>
+  </table>
+  <h3>Ayrık-zaman Fourier dönüşümü (DTFT)</h3>
+  <table class="tbl">
+    <tr><th>$x[n]$</th><th>$X(e^{j\omega})$</th></tr>
+    <tr><td>$\delta[n]$</td><td>$1$</td></tr>
+    <tr><td>$\delta[n-n_0]$</td><td>$e^{-j\omega n_0}$</td></tr>
+    <tr><td>$a^n u[n],\ |a|<1$</td><td>$\dfrac{1}{1-ae^{-j\omega}}$</td></tr>
+    <tr><td>$\delta[n+2]-\delta[n-2]$</td><td>$2j\sin(2\omega)$</td></tr>
+  </table>
+  <h3>Fourier Serisi (periyodik, periyot $T$)</h3>
+  <p>$a_k=\dfrac{1}{T}\displaystyle\int_T x(t)e^{-jk\omega_0 t}dt,\quad \omega_0=\dfrac{2\pi}{T}$</p>
+  <p class="small muted">Örnek: $T=3$, kare dalga $\pm3$ için $a_k=\dfrac{6}{k\pi}\sin\!\left(\dfrac{k\pi}{2}\right)e^{-jk\pi/2}$.</p>
+  </div>
+
+  <h2><span class="pill conv">Konvolüsyon</span> &amp; <span class="pill sys">Sistem</span></h2>
+  <div class="grid cols2">
+    <div class="card">
+      <h3>Konvolüsyon özellikleri</h3>
+      <ul class="small">
+        <li>Değişme: $x*h=h*x$</li>
+        <li>Birim: $x(t)*\delta(t)=x(t)$</li>
+        <li>Kaydırma: $x(t)*\delta(t-a)=x(t-a)$</li>
+        <li>Ölçek+kaydırma: $x*[A\delta(t-a)]=A\,x(t-a)$</li>
+        <li>Türev: $\frac{d}{dt}[x*h]=x*h'=x'*h$</li>
+        <li>CT: $y(t)=\int_{-\infty}^{\infty}x(\tau)h(t-\tau)d\tau$</li>
+        <li>DT: $y[n]=\sum_{k}x[k]h[n-k]$</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>LTI sistem özellikleri</h3>
+      <ul class="small">
+        <li><b>Doğrusallık:</b> $a x_1+b x_2 \to a y_1+b y_2$</li>
+        <li><b>Zamanla değişmezlik:</b> $x(t-t_0)\to y(t-t_0)$</li>
+        <li><b>Nedensellik:</b> $h(t)=0,\ t<0$ (sağ taraflı)</li>
+        <li><b>Kararlılık (BIBO):</b> $\int|h(t)|dt<\infty$ / $\sum|h[n]|<\infty$</li>
+        <li><b>Hafıza:</b> çıkış geçmiş/gelecek girdilere bağlıysa hafızalı</li>
+      </ul>
+      <p class="small muted">Laplace'ta: kararlı ⇔ ROC $j\omega$ eksenini içerir. Nedensel ⇔ ROC en sağdaki kutbun sağında.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COZUMLU ORNEKLER ============ -->
+<section id="ornek" class="view">
+  <h1>Çözümlü Örnekler</h1>
+  <p class="sub">Adım adım. Önce kendin çöz, sonra çözümü aç. Final tipleriyle birebir.</p>
+  <div class="filterbar" id="ornekFilter">
+    <button class="active" data-f="all">Tümü</button>
+    <button data-f="ayrik">Fark Denklemi</button>
+    <button data-f="lap">Laplace</button>
+    <button data-f="z">Z-Dönüşümü</button>
+    <button data-f="conv">Konvolüsyon</button>
+  </div>
+  <div id="ornekList"></div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="quiz" class="view">
+  <h1>Test — Kendini Sına</h1>
+  <p class="sub">Çoktan seçmeli. Bir şıkka tıkla, anında geri bildirim al.</p>
+  <div class="scorebar">
+    <div>Skor: <b id="scoreNow">0</b> / <span id="scoreTotal">0</span></div>
+    <div class="muted">Doğru: <b id="scoreRight" style="color:var(--green)">0</b> · Yanlış: <b id="scoreWrong" style="color:var(--red)">0</b></div>
+    <button class="btn ghost" id="resetQuiz" style="margin-left:auto">Sıfırla</button>
+  </div>
+  <div class="filterbar" id="quizFilter">
+    <button class="active" data-f="all">Tümü</button>
+    <button data-f="fou">Fourier</button>
+    <button data-f="conv">Konvolüsyon</button>
+    <button data-f="sys">Sistem/H</button>
+  </div>
+  <div id="quizList"></div>
+</section>
+
+<!-- ============ SIMULASYON ============ -->
+<section id="sim" class="view">
+  <h1>Final Simülasyonu</h1>
+  <p class="sub">2025 finalinin birebir formatı. Kağıt-kalem al, 4 problemi çöz, sonra çözümleri aç.</p>
+  <div class="note warn"><b>Süre önerisi:</b> ~75 dk. Her problem ~18 dk. Önce kolay bulduğundan başla.</div>
+  <div id="simList"></div>
+</section>
+
+</main>
+<footer>
+  Kaynak: ders PDF'leri + 2025 final cevap anahtarı (Assist. Prof. Dr. Sevcan Kahraman). · Yerel çalışma aracı, internet bağlantısı yalnızca formül render (MathJax) için gerekir.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
