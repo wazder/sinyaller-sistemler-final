@@ -151,8 +151,8 @@ const QUIZ = [
  correct:0, explain:`Genişlik $2a$ dikdörtgen → $2a\\,\\mathrm{sinc}(\\omega a)$.`},
 
 {cat:'fou', q:`$x(t)=e^{-a|t|}$ (çift üstel, $a>0$). $X(j\\omega)=?$`,
- opts:[`$\\frac{1}{\\sqrt{2\\pi}}\\frac{2a}{a^2+\\omega^2}$`,`$\\frac{1}{\\sqrt{2}}\\frac{2a}{a^2+\\omega^2}$`,`$\\frac{1}{\\pi}\\frac{2a}{a^2+\\omega^2}$`,`$\\frac{1}{\\sqrt{2\\pi}}\\frac{2a}{a^2-\\omega^2}$`],
- correct:0, explain:`Verilen cevap anahtarına göre $\\frac{1}{\\sqrt{2\\pi}}\\cdot\\frac{2a}{a^2+\\omega^2}$.`},
+ opts:[`$\\frac{2a}{a^2+\\omega^2}$`,`$\\frac{2a}{a^2-\\omega^2}$`,`$\\frac{a}{a^2+\\omega^2}$`,`$\\frac{1}{a+j\\omega}$`],
+ correct:0, explain:`İkiye böl: $\\int_{-\\infty}^{0}e^{at}e^{-j\\omega t}dt+\\int_{0}^{\\infty}e^{-at}e^{-j\\omega t}dt=\\frac{1}{a-j\\omega}+\\frac{1}{a+j\\omega}=\\frac{2a}{a^2+\\omega^2}$.`},
 
 {cat:'fou', q:`$x[n]=\\delta[n+2]-\\delta[n-2]$. DTFT $X(e^{j\\omega})=?$`,
  opts:[`$2j\\sin(2\\omega)$`,`$2j\\cos(2\\omega)$`,`$2j\\sin(4\\omega)$`,`$2\\sin(2\\omega)$`],
@@ -205,9 +205,9 @@ const QUIZ = [
  opts:[`$4[u(t-2{,}25)-u(t-4{,}25)]$`,`$4[u(t-2{,}25)+u(t-4{,}25)]$`,`$[u(t-2{,}25)-u(t-4{,}25)]$`,`$2[u(t-2{,}25)-u(t-4{,}25)]$`],
  correct:0, explain:`$\\delta$ ağırlığı $2\\sin(\\pi/2)=2$; $x=2\\delta(t-0{,}25)$, $h$ ile konvolüsyon $0{,}25$ kaydırır → genlik 4.`},
 
-{cat:'conv', q:`$y(t)=\\int_{-\\infty}^{\\infty}e^{-\\tau}u(\\tau)\\,3\\cos(t-\\tau-\\pi)d\\tau=?$`,
- opts:[`$\\frac{\\sqrt3}{2}\\cos(t-\\pi-\\frac\\pi4)$`,`$\\frac{\\sqrt3}{2}\\cos(t+\\pi-\\frac\\pi4)$`,`$\\frac{2}{\\sqrt3}\\cos(t-\\pi-\\frac\\pi4)$`,`$\\frac{\\sqrt3}{4}\\cos(t-\\pi-\\frac\\pi4)$`],
- correct:0, explain:`Sönümlü sistemin sinüse yanıtı: genlik $1/\\sqrt2$, faz $-\\pi/4$ → $\\frac{\\sqrt3}{2}\\cos(t-\\pi-\\frac\\pi4)$.`},
+{cat:'conv', q:`LTI sistem $h(t)=e^{-t}u(t)$, girdi $x(t)=3\\cos(t-\\pi)$. Çıkış $y(t)$ genliği nedir?`,
+ opts:[`$\\frac{3}{\\sqrt2}$`,`$3$`,`$\\frac{3}{2}$`,`$\\frac{\\sqrt3}{2}$`],
+ correct:0, explain:`$H(j1)=\\frac{1}{1+j}=\\frac{1}{\\sqrt2}e^{-j\\pi/4}$. Genlik $=3\\cdot\\frac{1}{\\sqrt2}=\\frac{3}{\\sqrt2}\\approx2.12$, faz $-\\frac{\\pi}{4}$.`},
 
 {cat:'sys', q:`$x(t)=e^{-at}u(t)*u(t)=?$`,
  opts:[`$\\frac1a(1-e^{-at})u(t)$`,`$\\frac1a(1+e^{-at})u(t)$`,`$\\frac1a(1-e^{-at})u(t-1)$`,`$\\frac1a(1-e^{at})u(t)$`],

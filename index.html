@@ -142,6 +142,7 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
     <div class="logo">Sinyaller &amp; Sistemler <span>· Final</span></div>
     <nav id="nav">
       <button data-view="home" class="active">Başlangıç</button>
+      <button data-view="anlatim">Konu Anlatımı</button>
       <button data-view="formul">Formüller</button>
       <button data-view="ornek">Çözümlü Örnekler</button>
       <button data-view="banka">Soru Bankası</button>
@@ -219,6 +220,106 @@ footer{max-width:1100px;margin:0 auto;padding:24px 20px;font-size:13px;
       <li><span class="num">5</span><div><b>Konvolüsyonda</b> $\delta$ kaydırır/ölçekler: $x(t)*\delta(t-a)=x(t-a)$.</div></li>
     </ul>
   </div>
+</section>
+
+<!-- ============ KONU ANLATIMI ============ -->
+<section id="anlatim" class="view">
+  <h1>Konu Anlatımı — Sıfırdan</h1>
+  <p class="sub">Bu dersi hiç görmediysen buradan başla. Günlük hayattan örneklerle, formülsüz mantığıyla.</p>
+
+  <div class="note"><b>Büyük resim:</b> Bu ders iki şeyle ilgilenir — <b>sinyal</b> (zamanla değişen bir bilgi: ses, gerilim, sıcaklık) ve <b>sistem</b> (sinyali alıp başka sinyale çeviren kutu: amplifikatör, filtre). Final'deki 4 konu, bir sistemi/sinyali <b>farklı "gözlüklerle"</b> incelemenin yollarıdır.</div>
+
+  <h2>0 · Temel Taşlar</h2>
+  <div class="grid cols2">
+    <div class="card">
+      <h3>Sinyal nedir?</h3>
+      <p class="small">Zamana bağlı bir değer. İki tür:</p>
+      <ul class="small">
+        <li><b>Sürekli-zaman</b> \(x(t)\): her an tanımlı (plak, analog ses). \(t\) reel sayı.</li>
+        <li><b>Ayrık-zaman</b> \(x[n]\): sadece tam sayı anlarında (dijital ses örnekleri). \(n\) tam sayı.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Sistem nedir?</h3>
+      <p class="small">Girdi sinyali \(x\)'i alıp çıktı \(y\) üreten kutu: \(x \to [\text{Sistem}] \to y\).</p>
+      <p class="small">Örnek: ses sistemi bası artırır → bu bir <b>filtre</b>dir. Bu derste hep <b>LTI</b> sistemlerle uğraşırız.</p>
+    </div>
+  </div>
+
+  <div class="card accent">
+    <h3>2 sihirli sinyal: impuls ve basamak</h3>
+    <ul class="small">
+      <li><b>Birim impuls \(\delta\):</b> tek bir anda olan "çıt" (sonsuz kısa, sonsuz yüksek ama alanı 1). Ayrıkta \(\delta[n]\) sadece \(n=0\)'da 1, başka her yerde 0. <i>En önemli özelliği:</i> bir sistemi \(\delta\) ile dürtersen aldığın cevap (<b>dürtü yanıtı \(h\)</b>) o sistemi tamamen tanımlar.</li>
+      <li><b>Birim basamak \(u\):</b> bir anda açılıp açık kalan anahtar. \(u(t)=0\) (\(t<0\)), \(u(t)=1\) (\(t\ge0\)). "Şu andan itibaren" demenin yolu: \(u(t-3)\) = "t=3'ten sonra".</li>
+    </ul>
+  </div>
+
+  <div class="card accent">
+    <h3>LTI = Doğrusal + Zamanla Değişmez</h3>
+    <ul class="small">
+      <li><b>Doğrusal:</b> girdiyi 2 katına çıkarırsan çıktı da 2 katına çıkar; iki girdiyi toplarsan çıktılar toplanır. (Adil, orantılı sistem.)</li>
+      <li><b>Zamanla değişmez:</b> bugün yaparsan ne olursa yarın yapsan da aynısı olur, sadece zamanı kayar. Sistemin "huyu" zamanla değişmez.</li>
+    </ul>
+    <p class="small muted">Bütün final konuları LTI sistemler içindir. LTI ise tek bir şeyle, dürtü yanıtı \(h\) ile, tamamen bilinir.</p>
+  </div>
+
+  <h2>1 · Konvolüsyon — sistemin çıktısını bulmak</h2>
+  <div class="card">
+    <p class="small">LTI bir sisteme herhangi bir girdi \(x\) verirsen çıktı şudur: \(y = x * h\) (konvolüsyon). Sezgi: her girdi, üst üste binmiş sayısız küçük "çıt"lardan (impuls) oluşur; sistem her çıt'a kendi \(h\) cevabını verir; hepsini toplarsın.</p>
+    <div class="note small"><b>En çok işine yarayacak kural:</b> impuls kaydırır. \(x(t)*\delta(t-a)=x(t-a)\). Yani \(\delta\) ile konvolüsyon = o kadar öteleme. Katsayısı varsa o kadar da ölçekler.</div>
+    <p class="small"><b>Formüller:</b> Sürekli \(y(t)=\int x(\tau)h(t-\tau)d\tau\), &nbsp; Ayrık \(y[n]=\sum_k x[k]h[n-k]\). Pratikte: birini ters çevir, kaydır, çakışan alanı/toplamı hesapla.</p>
+  </div>
+
+  <h2>2 · Fourier — "bu sinyalde hangi frekanslar var?"</h2>
+  <div class="card">
+    <p class="small"><b>Sezgi:</b> Bir orkestra sesini düşün. Fourier, o karmaşık sesi "şu kadar bas, şu kadar tiz" diye <b>frekanslara ayıran prizma</b>dır. Her sinyal, farklı frekanslardaki sinüs dalgalarının toplamı olarak yazılabilir.</p>
+    <ul class="small">
+      <li><b>Fourier Serisi:</b> sinyal <i>periyodikse</i> (tekrar ediyorsa), onu sinüslerin toplamı yapar. Katsayı \(a_k\) = "k. frekanstan ne kadar var".</li>
+      <li><b>Fourier Dönüşümü \(X(j\omega)\):</b> periyodik olmayan sinyaller için de aynı fikir. \(\omega\) = frekans. Sonuç, frekansların "reçetesi"dir.</li>
+      <li><b>Neden lazım?</b> Bir sistemden sinyal geçince her frekans bağımsız davranır. Frekans bölgesinde çarpma, zaman bölgesinde zor olan konvolüsyonun yerini alır.</li>
+    </ul>
+    <div class="note small"><b>Finalde tipik:</b> verilen \(x(t)\) veya \(x[n]\)'in dönüşümünü tablodan bul; ya da fark denkleminden frekans yanıtı \(H\) çıkar.</div>
+  </div>
+
+  <h2>3 · DTFT &amp; Frekans Yanıtı — ayrık sistemler</h2>
+  <div class="card">
+    <p class="small"><b>DTFT</b> = ayrık sinyaller için Fourier. Ayrık bir sistem çoğunlukla bir <b>fark denklemi</b> ile verilir, örn. \(y[n]-\tfrac12 y[n-1]=x[n]\). Bu, "şu anki çıkış, biraz da bir önceki çıkışa bağlı" demektir.</p>
+    <div class="step small"><b>Reçete (çok önemli):</b> Her \(y[n-k]\) terimini \(e^{-jk\omega}Y\), her \(x[n-k]\)'yi \(e^{-jk\omega}X\) yap. Sonra \(H(e^{j\omega})=\dfrac{Y}{X}\) çek. \(H\) sistemin "frekans karnesi"dir: hangi frekansı ne kadar geçirir.</div>
+    <p class="small"><b>Dürtü yanıtı \(h[n]\)</b>: \(H\)'yi kısmi kesirlere ayır, her parçayı tablodan ters çevir. Çok kullanılan çift: \(a^n u[n]\leftrightarrow\dfrac{1}{1-ae^{-j\omega}}\).</p>
+  </div>
+
+  <h2>4 · Laplace — sürekli sistemlerin "süper" dönüşümü</h2>
+  <div class="card">
+    <p class="small"><b>Sezgi:</b> Fourier sadece "saf salınan" sinyalleri analiz eder. Laplace, üstüne <b>büyüyen/sönen</b> (\(e^{at}\)) davranışı da ekler — daha genel. Değişken \(s\) karmaşık bir sayıdır. Türev/integral içeren diferansiyel denklemleri basit cebire çevirir.</p>
+    <ul class="small">
+      <li><b>Nasıl çalışır:</b> Diferansiyel denklemi \(s\) bölgesine taşı (türev → \(s\) ile çarpma). Cebirle çöz, sonra tablodan geri dön.</li>
+      <li><b>ROC (Yakınsaklık Bölgesi):</b> En kritik nokta. Aynı \(X(s)\) ifadesi, ROC'a göre <b>farklı sinyaller</b> verir. Kural: kutbun <b>sağındaki</b> ROC → sağ-taraflı (\(u(t)\), nedensel); <b>solundaki</b> → sol-taraflı (\(u(-t)\)).</li>
+    </ul>
+    <div class="note small"><b>Finalde tipik:</b> \(X(s)\) + ROC verilir → kısmi kesir → tablodan \(x(t)\). Ya da giriş-çıkıştan \(H(s)\) bul.</div>
+  </div>
+
+  <h2>5 · Z-Dönüşümü — ayrık dünyanın Laplace'ı</h2>
+  <div class="card">
+    <p class="small"><b>Sezgi:</b> Laplace sürekli içindi; <b>Z-dönüşümü</b> onun ayrık (dijital) karşılığıdır. Değişken \(z\) karmaşıktır. \(z^{-1}\) = "bir adım geciktir" demektir.</p>
+    <ul class="small">
+      <li><b>Kutup &amp; sıfır:</b> \(X(z)\) bir kesirdir. Paydayı sıfır yapan \(z\)'ler <b>kutup</b> (×), payı sıfır yapanlar <b>sıfır</b> (○). Bunları \(z\)-düzleminde işaretlersin.</li>
+      <li><b>ROC + birim çember:</b> Sağ-taraflı dizi → ROC en dış kutbun <i>dışı</i> (\(|z|>\)); sol-taraflı → <i>içi</i>; iki-taraflı → halka. ROC birim çemberi (\(|z|=1\)) içeriyorsa sistem kararlıdır.</li>
+    </ul>
+    <div class="note small"><b>Finalde tipik:</b> \(x[n]\) verilir → her terimi tablodan \(X(z)\)'ye çevir, ROC kesişimini bul, kutup-sıfır diyagramını çiz.</div>
+  </div>
+
+  <h2>Sistem Özellikleri — 5 soru, 5 cevap</h2>
+  <div class="card">
+    <ul class="checklist small">
+      <li><span class="num">L</span><div><b>Doğrusal mı?</b> Orantı + toplama korunuyor mu? (\(x^2\), sabit ekleme → doğrusal değil.)</div></li>
+      <li><span class="num">Z</span><div><b>Zamanla değişmez mi?</b> Katsayılar \(t\) veya \(n\)'e bağlıysa, ya da zaman ölçekleniyorsa (\(x(t/2)\)) → değil.</div></li>
+      <li><span class="num">N</span><div><b>Nedensel mi?</b> Çıkış sadece <i>şu an ve geçmişe</i> bağlıysa evet. Gelecek (\(x(t+1)\)) kullanıyorsa → değil. (\(h(t)=0,\ t<0\) ⇔ nedensel.)</div></li>
+      <li><span class="num">K</span><div><b>Kararlı mı (BIBO)?</b> \(\int|h|\,dt<\infty\) veya \(\sum|h[n]|<\infty\) ise evet. Sınırlı girdi → sınırlı çıktı.</div></li>
+      <li><span class="num">H</span><div><b>Hafızalı mı?</b> Çıkış başka anların değerlerine bağlıysa hafızalı; sadece o anki \(x[n]\)'e bağlıysa hafızasız.</div></li>
+    </ul>
+  </div>
+
+  <div class="note warn"><b>Bir sonraki adım:</b> Önce <b>Formüller</b> sekmesindeki tabloları gör, sonra <b>Çözümlü Örnekler</b>'i adım adım takip et, en son <b>Soru Bankası</b> ve <b>Test</b> ile kendini dene.</div>
 </section>
 
 <!-- ============ FORMULLER ============ -->
