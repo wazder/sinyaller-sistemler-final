@@ -366,6 +366,50 @@ document.getElementById('resetQuiz').addEventListener('click',()=>{
 function saveProgress(){ localStorage.setItem('ssQuiz',JSON.stringify(answered)); }
 function loadProgress(){ try{answered=JSON.parse(localStorage.getItem('ssQuiz'))||{};}catch(e){answered={};} }
 
+/* --- Soru Bankası --- */
+const BANK_NAMES={fourier:'Fourier',fseries:'Fourier Serisi',dtft:'DTFT / Sistem',
+  laplace:'Laplace',z:'Z-Dönüşümü',conv:'Konvolüsyon',sys:'Sistem / Sinyal',sampling:'Örnekleme'};
+const BANK_PILL={fourier:'fou',fseries:'fou',dtft:'sys',laplace:'lap',z:'z',conv:'conv',sys:'sys',sampling:'fou'};
+let bankFilter='all', bankSearch='';
+function renderBank(){
+  const box=document.getElementById('bankList'); box.innerHTML='';
+  const s=bankSearch.trim().toLowerCase();
+  let shown=0;
+  QBANK.forEach((item,idx)=>{
+    if(bankFilter!=='all' && item.topic!==bankFilter) return;
+    if(s){
+      const hay=(item.q+' '+(item.a||'')+' '+(item.fig||'')+' '+BANK_NAMES[item.topic]).toLowerCase();
+      if(!hay.includes(s)) return;
+    }
+    shown++;
+    const d=document.createElement('div'); d.className='card'; d.style.marginBottom='14px';
+    let opts='';
+    if(item.opts && item.opts.length){
+      opts='<div style="margin:10px 0">'+item.opts.map((o,j)=>
+        `<div class="opt disabled${j===item.correct?' correct':''}" style="cursor:default">${o}</div>`).join('')+'</div>';
+    }
+    const fig=item.fig?`<div class="note small" style="margin:8px 0"><b>Şekil:</b> ${item.fig}</div>`:'';
+    d.innerHTML=`
+      <div class="tag-row"><span class="pill ${BANK_PILL[item.topic]}">${BANK_NAMES[item.topic]}</span>
+        <span class="muted small">#${idx+1}</span></div>
+      <p style="margin:10px 0">${item.q}</p>
+      ${fig}
+      <details><summary>Cevabı Göster</summary><div class="body">${opts}<p>${item.a||''}</p></div></details>`;
+    box.appendChild(d);
+  });
+  if(shown===0) box.innerHTML='<div class="card muted">Eşleşen soru yok.</div>';
+  const sh=document.getElementById('bankShown'); if(sh) sh.textContent=shown+' soru';
+  typeset(box);
+}
+document.getElementById('bankFilter').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  document.querySelectorAll('#bankFilter button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); bankFilter=b.dataset.f; renderBank();
+});
+document.getElementById('bankSearch').addEventListener('input',e=>{
+  bankSearch=e.target.value; renderBank();
+});
+
 /* --- Simülasyon --- */
 function renderSim(){
   const box=document.getElementById('simList'); box.innerHTML='';
@@ -381,8 +425,10 @@ function renderSim(){
 }
 
 /* --- Başlat --- */
-document.getElementById('quizCount').textContent=QUIZ.length;
+const bc=document.getElementById('bankCount'); if(bc) bc.textContent=QBANK.length;
+const tq=document.getElementById('totalQ'); if(tq) tq.textContent=(QBANK.length+QUIZ.length+ORNEKLER.length);
 loadProgress();
 renderOrnek();
+renderBank();
 renderQuiz();
 renderSim();
